@@ -5,7 +5,7 @@
 
 //these enums represent the type and status of an event in the application
 enum EventType { practice, game, meeting, lift, other }
-enum EventStatus { scheduled, completed, canceled }
+enum EventStatus { scheduled, completed, cancelled }
 
 // This class is the start and foundation of the calendar
 // It contains all the necessary information for an event, such as its title, type, status, 
