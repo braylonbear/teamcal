@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'data/sample_events.dart';
 import 'widgets/event_tile.dart';
 import 'widgets/month_grid.dart';
+import 'models/event.dart';
+import 'utils/dates.dart';
+
 void main() => runApp(const TeamCalApp());
 
 class TeamCalApp extends StatelessWidget {
@@ -26,32 +29,55 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime? selectedDay;
+
   @override
   Widget build(BuildContext context) {
+    // Decide which events to show
+    List<Event> visibleEvents = [];
+
+    if (selectedDay == null) {
+      // No day tapped yet, so show everything
+      visibleEvents = sampleEvents;
+    } else {
+      // Only keep events on the selected day
+      for (Event event in sampleEvents) {
+        if (isSameDay(event.startTime, selectedDay!)) {
+          visibleEvents.add(event);
+        }
+      }
+    }
+
     return Scaffold(
-        appBar: AppBar(title: const Text('TeamCal')),
-        body: Column(
-          children: [
-            MonthGrid(
-              selectedDay: selectedDay,
-              onDaySelected: (day) {
-                setState(() {
+      appBar: AppBar(title: const Text('TeamCal')),
+      body: Column(
+        children: [
+          MonthGrid(
+            selectedDay: selectedDay,
+            onDaySelected: (day) {
+              setState(() {
+                if (selectedDay != null && isSameDay(selectedDay!, day)) {
+                  // Tapped the day that's already selected, so clear it
+                  selectedDay = null;
+                } else {
+                  // Tapped a new day, so select it
                   selectedDay = day;
-                });
+                }
+              });
+            },
+          ),
+          const Divider(),
+          Expanded(
+                child: visibleEvents.isEmpty
+                    ? const Center(child: Text('No events on this day'))
+                    : ListView.builder(
+                itemCount: visibleEvents.length,
+                itemBuilder: (context, index) {
+                return EventTile(event: visibleEvents[index]);
               },
             ),
-            const Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: sampleEvents.length,
-                itemBuilder: (context, index) {
-                  return EventTile(event: sampleEvents[index]);
-                },
-              ),
-            ),
-          ],
-        ),
-      );
-    // here is the end of the Scaffold widget
+          ),
+        ],
+      ),
+    );
   }
 }

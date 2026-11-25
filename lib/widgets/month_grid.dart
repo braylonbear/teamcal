@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/dates.dart';
 
 class MonthGrid extends StatelessWidget {
   final DateTime? selectedDay;
@@ -20,16 +21,17 @@ const MonthGrid({super.key, required this.selectedDay, required this.onDaySelect
 
     // then the day numbers
     for (int day = 1; day <= daysInMonth; day++) {
-      bool isSelected = selectedDay != null &&
-          selectedDay!.year == firstDay.year &&
-          selectedDay!.month == firstDay.month &&
-          selectedDay!.day == day;
+      DateTime thisDay = DateTime(firstDay.year, firstDay.month, day);
+
+      bool isSelected = selectedDay != null && isSameDay(selectedDay!, thisDay);
+      bool isToday = isSameDay(DateTime.now(), thisDay);
 
       boxes.add(Center(child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: isSelected ? Colors.blue.shade100 : null,
+          side: isToday ? const BorderSide(color: Colors.blue, width: 2) : null,
         ),
-        onPressed: () => onDaySelected(DateTime(firstDay.year, firstDay.month, day)),
+        onPressed: () => onDaySelected(thisDay),
         child: Text('$day'),
       )));
     }
