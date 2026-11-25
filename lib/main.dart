@@ -12,11 +12,34 @@ class TeamCalApp extends StatelessWidget {
     return MaterialApp(
       // take off the debug banner
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: const CalendarScreen(),     
+    );
+  }
+}
+
+class CalendarScreen extends StatefulWidget {
+  const CalendarScreen({super.key});
+
+  @override
+  State<CalendarScreen> createState() => _CalendarScreenState();
+}
+
+class _CalendarScreenState extends State<CalendarScreen> {
+  DateTime? selectedDay;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(title: const Text('TeamCal')),
         body: Column(
           children: [
-            const MonthGrid(),
+            MonthGrid(
+              selectedDay: selectedDay,
+              onDaySelected: (day) {
+                setState(() {
+                  selectedDay = day;
+                });
+              },
+            ),
             const Divider(),
             Expanded(
               child: ListView.builder(
@@ -28,7 +51,7 @@ class TeamCalApp extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
+    // here is the end of the Scaffold widget
   }
 }

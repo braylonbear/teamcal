@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MonthGrid extends StatelessWidget {
-  const MonthGrid({super.key});
+  final DateTime? selectedDay;
+final void Function(DateTime) onDaySelected;
 
+const MonthGrid({super.key, required this.selectedDay, required this.onDaySelected});
   @override
   Widget build(BuildContext context) {
     DateTime firstDay = DateTime(2026, 11, 1);
@@ -18,8 +20,20 @@ class MonthGrid extends StatelessWidget {
 
     // then the day numbers
     for (int day = 1; day <= daysInMonth; day++) {
-      boxes.add(Center(child: Text('$day')));
+      bool isSelected = selectedDay != null &&
+          selectedDay!.year == firstDay.year &&
+          selectedDay!.month == firstDay.month &&
+          selectedDay!.day == day;
+
+      boxes.add(Center(child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: isSelected ? Colors.blue.shade100 : null,
+        ),
+        onPressed: () => onDaySelected(DateTime(firstDay.year, firstDay.month, day)),
+        child: Text('$day'),
+      )));
     }
+
 
     return GridView.count(
       crossAxisCount: 7,   // 7 days per row
