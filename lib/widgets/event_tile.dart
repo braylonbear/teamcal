@@ -23,7 +23,13 @@ class EventTile extends StatelessWidget {
         color: event.status == EventStatus.cancelled ? Colors.grey : null,
       ),
     ),
-    subtitle: Text('${_formatTime(event.startTime)} · ${event.location}'),
+    subtitle: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('${_formatTime(event.startTime)} · ${event.location}'),
+        if (event.notes != null) Text(event.notes!),
+      ],
+    ),
     trailing: event.updatedAt != null
         ? const Chip(label: Text('Updated'))
         : null,

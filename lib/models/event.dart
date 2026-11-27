@@ -32,18 +32,4 @@ class Event
     this.notes,
     this.updatedAt,
   });
-
-  // now I am going to make actions for events
-
-  void edit()
-  {
-    // TODO: Implement edit functionality for the event
-  }
-
-  void cancel()
-  {
-    // TODO: Implement cancel functionality for the event
-  }
-
-
 }
