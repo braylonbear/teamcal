@@ -74,7 +74,7 @@ final List<Event> sampleEvents = [
     title: 'Scrimmage',
     type: EventType.game,
     status: EventStatus.cancelled,
-    startTime: DateTime(2026, 12, 10, 18, 0),
+    startTime: DateTime(2026, 12, 7, 16, 0),
     location: 'Fieldhouse',
   ),
 ];

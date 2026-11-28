@@ -144,6 +144,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           MonthGrid(
             selectedDay: selectedDay,
             month: shownMonth,
+            events: events,
             onDaySelected: (day) {
               setState(() {
                 if (selectedDay != null && isSameDay(selectedDay!, day)) {
