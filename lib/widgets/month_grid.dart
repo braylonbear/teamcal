@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../utils/dates.dart';
 import '../models/event.dart';
 
 class MonthGrid extends StatelessWidget {

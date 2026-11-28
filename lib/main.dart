@@ -4,7 +4,6 @@ import 'widgets/event_tile.dart';
 import 'widgets/month_grid.dart';
 import 'widgets/add_event_dialog.dart';
 import 'models/event.dart';
-import 'utils/dates.dart';
 
 void main() => runApp(const TeamCalApp());
 
